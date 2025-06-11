@@ -16,17 +16,17 @@ jobs:
       - name: Set up SSH key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.WSL_SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          echo "${{ secrets.WSL_SSH_KEY }}" > ~/.ssh/github_wsl
+          chmod 600 ~/.ssh/github_wsl
 
       # actually copy
       - name: Copy README to WSL
         uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.WSL_SSH_HOST }}     # e.g. your public IP or dynamic DNS
-          port: 2222
+          port: 22
           username: alan
-          key_path: ~/.ssh/id_rsa
+          key_path: ~/.ssh/github_wsl
           source: "README.md"
           target: "/home/alan/remote-dir/README.md"
 
